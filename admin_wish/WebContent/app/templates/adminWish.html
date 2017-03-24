@@ -1,0 +1,54 @@
+<div class="container">
+	<h2>{{"title" | translate}}</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{"id" | translate}}</th>
+				<th>{{"name" | translate}}</th>
+				<th>{{"createdDate" | translate}}</th>
+				<th>{{"description" | translate}}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="wish in wishs">
+				<td>{{wish.id}}</td>
+				<td>{{wish.name}}</td>
+				<td>{{wish.labelDate}}</td>
+				<td>{{wish.description}}</td>
+				<td><i class="glyphicon glyphicon-remove" ng-click="deleteWish(wish)"></i></td>
+			</tr>
+		</tbody>
+		<button type="button" class="btn btn-success" ng-click="open()">{{"new"
+			| translate}}</button>
+	</table>
+
+
+	<script type="text/ng-template" id="modal.html">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Wish</h3>
+      </div>
+      <div class="modal-body">
+
+                   <div class="input-group">
+						<span class="input-group-addon"></span><input type="text"
+							class="form-control" name="name" placeholder="name" 
+							ng-model="modal.wish.name" required="true"
+							autofocus>
+					</div>
+
+					</br>
+					<div class="input-group">
+						<span class="input-group-addon"></span><input type="text" required="true" ng-model="modal.wish.description"
+							class="form-control" name="description" placeholder="description">
+					</div>
+       
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+        <button class="btn btn-success" ng-click="modal.addWish()">Add</button>
+      </div>
+    </script>
+
+</div>
+

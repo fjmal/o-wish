@@ -1,0 +1,106 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	
+	
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security.xsd
+    http://www.springframework.org/schema/data/elasticsearch 
+    http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+
+	<context:component-scan base-package="com.web.api.controllers" />
+	<context:annotation-config />
+	<!--Elastic Search -->
+	<!-- <elasticsearch:repositories base-package="com.web.api.elastic.repositories" />
+
+	<b:bean name="/ElasticSearchConfig" class="com.web.api.elastic.config.ElasticSearchConfig"></b:bean>
+ -->
+	<!-- Spring Auth -->
+
+	<http use-expressions="true" pattern="/api/**" entry-point-ref="customEntryPoint">
+
+		<intercept-url pattern="/api/**" access="isAuthenticated()" />
+		<custom-filter position="PRE_AUTH_FILTER" ref="wsOAuthFilter" />
+		<logout logout-success-url="/api/logout" invalidate-session="true"
+			logout-url="/api/logout" />
+		<csrf disabled="true" />
+	</http>
+	<b:bean id="wsOAuthFilter" class="com.web.api.security.WSAuthServiceFilter">
+
+		<b:property name="authenticationManager" ref="authenticationManager" />
+		<b:property name="postOnly" value="false" />
+		<b:property name="authenticationSuccessHandler" ref="mySuccessHandler" />
+	</b:bean>
+
+	<!-- Authentication manager configuration -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="authServiceProvider" />
+
+	</authentication-manager>
+	<b:bean id="authServiceProvider" class="com.web.api.security.AuthServiceProvider">
+	</b:bean>
+	<b:bean id="customEntryPoint" class="com.web.api.security.CustomEntryPoint">
+
+	</b:bean>
+
+
+	<!-- Connect the custom authentication success handler -->
+	<b:bean id="mySuccessHandler" class="com.web.api.security.CustomSuccessHandler" />
+
+
+
+
+
+	<!-- data base connection -->
+	<b:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<b:property name="driverClassName" value="com.mysql.jdbc.Driver"></b:property>
+		<b:property name="url" value="jdbc:mysql://localhost:3306/wish"></b:property>
+		<b:property name="username" value="root"></b:property>
+		<b:property name="password" value="08863583Fat?"></b:property>
+		<b:property name="connectionProperties">
+			<b:props>
+				<b:prop key="hibernate.show_sql">
+					true
+				</b:prop>
+				<b:prop key="hibernate.enable_lazy_load_no_trans">
+					true
+				</b:prop>
+			</b:props>
+		</b:property>
+	</b:bean>
+
+
+	<b:bean id="loginSessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<b:property name="dataSource" ref="dataSource" />
+		<b:property name="packagesToScan" value="com.web.api" />
+		<b:property name="hibernateProperties">
+			<b:props>
+				<b:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</b:prop>
+				<b:prop key="hibernate.show_sql">true</b:prop>
+
+			</b:props>
+		</b:property>
+	</b:bean>
+
+	<b:bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<b:property name="sessionFactory" ref="loginSessionFactory" />
+	</b:bean>
+
+	<!-- The transaction manager -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</b:beans>

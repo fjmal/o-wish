@@ -1,0 +1,18 @@
+{
+    "name": "Wish",
+    "version": "1.0.0",
+    "dependencies": {
+        "angular":          "1.2.4",
+        "angular-ui-router": "0.2.18",
+        "bootstrap":"3.1.1",
+        "angular-translate":"2.15.1",
+        "angular-translate-loader-partial":"2.15.1",
+        "angular-toastr":"1.2.1",
+        "angular-animate":"1.2.4"
+      
+        
+     
+        
+    },
+    "analytics": false
+}

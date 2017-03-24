@@ -1,0 +1,37 @@
+{
+  "name": "frontend_app",
+  "description": "Angular Js Frontend App",
+  "license": "MIT",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/angular/angular.js.git"
+  },
+  "dependencies": {
+    "grunt": "^0.4.5",
+	"bower": "~1.3.12",
+    
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6",
+    "gulp-change" : "latest",
+    "gulp-html-src": "1.0.0",
+    "gulp-debug": "2.1.2",
+    "gulp-concat": "latest",
+    "gulp-minify": "latest",
+    "gulp-html-replace":"latest",
+  
+    "run-sequence": "^1.1.1",
+    "core-util-is": "1.0.2",
+    "gulp-uglify":"latest",
+    "jasmine-core": "^2.2.0",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5"
+   
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start karma.conf.js"
+  }
+}

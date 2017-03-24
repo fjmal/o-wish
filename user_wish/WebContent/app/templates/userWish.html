@@ -1,0 +1,26 @@
+<div class="container">
+	<h2>{{"title" | translate}}</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>{{"id" | translate}}</th>
+				<th>{{"name" | translate}}</th>
+				<th>{{"createdDate" | translate}}</th>
+				<th>{{"description" | translate}}</th>
+			
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="wish in wishs">
+				<td>{{wish.id}}</td>
+				<td>{{wish.name}}</td>
+				<td>{{wish.labelDate}}</td>
+				<td>{{wish.description}}</td>
+			</tr>
+		</tbody>
+		
+	</table>
+
+
+</div>
+
